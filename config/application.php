@@ -38,7 +38,6 @@ if (file_exists($root_dir . '/.env')) {
 
     $dotenv->load();
 
-    $dotenv->required(['WP_HOME', 'WP_SITEURL']);
     if (!env('DATABASE_URL')) {
         $dotenv->required(['DB_NAME', 'DB_USER', 'DB_PASSWORD']);
     }
@@ -60,8 +59,35 @@ if (!env('WP_ENVIRONMENT_TYPE') && in_array(WP_ENV, ['production', 'staging', 'd
 /**
  * URLs
  */
-Config::define('WP_HOME', env('WP_HOME'));
-Config::define('WP_SITEURL', env('WP_SITEURL'));
+/**
+ * Allow WordPress to detect HTTPS when used behind a reverse proxy or a load balancer
+ * See https://codex.wordpress.org/Function_Reference/is_ssl#Notes
+ */
+if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') {
+    $_SERVER['HTTPS'] = 'on';
+}
+
+$scheme = 'http';
+// If we have detected that the end user is HTTPS, make sure we pass that
+// through here, so <img> tags and the like don't generate mixed-mode
+// content warnings.
+if ( isset( $_SERVER['HTTPS'] ) && !empty( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] != 'off' ) {
+	$scheme = 'https';
+}
+$site_url = $scheme . '://' . $_SERVER['HTTP_HOST'] . '/';
+Config::define('WP_HOME', $site_url);
+Config::define('WP_SITEURL', $site_url . 'wp/');
+
+/**
+ * Environments
+ * Uncomment these lines and provide complete URLs for each environment
+ * if you want to use the Stage Switcher plugin.
+ */
+// define('ENVIRONMENTS', [
+//     'development' => '',
+//     'staging'     => '',
+//     'production'  => '',
+// ]);
 
 /**
  * Custom Content Directory
@@ -128,14 +154,6 @@ Config::define('WP_DEBUG_DISPLAY', false);
 Config::define('WP_DEBUG_LOG', false);
 Config::define('SCRIPT_DEBUG', false);
 ini_set('display_errors', '0');
-
-/**
- * Allow WordPress to detect HTTPS when used behind a reverse proxy or a load balancer
- * See https://codex.wordpress.org/Function_Reference/is_ssl#Notes
- */
-if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') {
-    $_SERVER['HTTPS'] = 'on';
-}
 
 $env_config = __DIR__ . '/environments/' . WP_ENV . '.php';
 
