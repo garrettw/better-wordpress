@@ -23,5 +23,25 @@ web/.htaccess
 # Composer
 /vendor
 
+# NPM Modules
+node_modules/
+
 # WP-CLI
 wp-cli.local.yml
+
+# OS generated files
+.DS_Store*
+Thumbs.db
+._*
+
+# Vim generated files
+*.un~
+
+# Sass
+.sass-cache
+
+# PhpStorm
+.idea
+
+# VS Code
+.vscode

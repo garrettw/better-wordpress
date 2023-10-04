@@ -1,5 +1,5 @@
 {
-  "name": "roots/bedrock",
+  "name": "garrettw/better-wordpress",
   "type": "project",
   "license": "MIT",
   "description": "WordPress boilerplate with Composer, easier configuration, and an improved folder structure",
@@ -14,14 +14,17 @@
       "name": "Ben Word",
       "email": "ben@benword.com",
       "homepage": "https://github.com/retlehs"
+    },
+    {
+      "name": "Garrett Whitehorn",
+      "homepage": "https://github.com/garrettw"
     }
   ],
   "keywords": [
     "bedrock", "composer", "roots", "wordpress", "wp", "wp-config"
   ],
   "support": {
-    "issues": "https://github.com/roots/bedrock/issues",
-    "forum": "https://discourse.roots.io/category/bedrock"
+    "issues": "https://github.com/garrettw/better-wordpress/issues"
   },
   "repositories": [
     {
@@ -33,6 +36,7 @@
   "require": {
     "php": ">=8.0",
     "composer/installers": "^2.2",
+    "inpsyde/wonolog": "^2.0.0-beta.2",
     "vlucas/phpdotenv": "^5.5",
     "oscarotero/env": "^2.1",
     "roots/bedrock-autoloader": "^1.0",
@@ -40,6 +44,7 @@
     "roots/wordpress": "6.3.1",
     "roots/wp-config": "1.0.0",
     "roots/wp-password-bcrypt": "1.1.0",
+    "roots/wp-stage-switcher": "2.2.0",
     "wpackagist-theme/twentytwentythree": "^1.0"
   },
   "require-dev": {
